@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {Category} from "../models/categories.model";
 import {CategoriesService} from "../services/category/categories.service";
-import {NgForOf, NgIf} from "@angular/common";
+import {NgIf} from "@angular/common";
 import {CategoryListComponent} from "./categoryList/category-list.component";
 import {CategoryFormComponent} from "./categoryFrom/category-form.component";
 import {RouterModule} from "@angular/router";
@@ -14,7 +14,6 @@ import {RouterModule} from "@angular/router";
     CategoryListComponent,
     CategoryFormComponent,
     NgIf,
-    NgForOf
   ],
   templateUrl: './category.component.html',
   styleUrls: ['./category.component.scss']
