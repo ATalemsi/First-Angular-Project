@@ -1,0 +1,21 @@
+<ul class="space-y-4">
+  <li
+    *ngFor="let category of categories"
+    class="flex justify-between items-center bg-gray-100 p-3 rounded shadow"
+  >
+    <span class="text-lg font-medium">{{ category.name }}</span>
+    <button
+      class="text-white bg-blue-500 hover:bg-blue-600 px-3 py-1 rounded"
+      (click)="editCategory(category)"
+    >
+      Edit
+    </button>
+    <button
+      class="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600"
+      (click)="deleteCategory(category)"
+    >
+      Delete
+    </button>
+  </li>
+</ul>
+
