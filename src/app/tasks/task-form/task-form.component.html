@@ -1,0 +1,73 @@
+<div>
+  <h3 class="text-xl font-semibold mb-4">
+    {{ taskToEdit ? 'Edit Task' : 'Add Task' }}
+  </h3>
+
+  <form (ngSubmit)="onSubmit()" class="space-y-4">
+    <!-- Input for Title -->
+    <div>
+      <label for="title" class="block text-sm font-medium text-gray-700">
+        Task Title
+      </label>
+      <input
+        type="text"
+        id="title"
+        [(ngModel)]="title"
+        name="title"
+        required
+        maxlength="100"
+        class="w-full mt-1 px-3 py-2 border rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+      />
+      <!-- Validation for Title -->
+      <p *ngIf="submitted && title.trim().length > titleMaxLength" class="text-red-500 text-sm">
+        The title cannot exceed {{ titleMaxLength }} characters!
+      </p>
+    </div>
+
+    <!-- Input for Description -->
+    <div>
+      <label for="description" class="block text-sm font-medium text-gray-700">
+        Task Description
+      </label>
+      <textarea
+        id="description"
+        [(ngModel)]="description"
+        name="description"
+        rows="4"
+        maxlength="500"
+        class="w-full mt-1 px-3 py-2 border rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+      ></textarea>
+      <!-- Validation for Description -->
+      <p *ngIf="submitted && description.trim().length > descriptionMaxLength" class="text-red-500 text-sm">
+        The description cannot exceed {{ descriptionMaxLength }} characters!
+      </p>
+    </div>
+
+    <!-- Input for Due Date -->
+    <div>
+      <label for="dueDate" class="block text-sm font-medium text-gray-700">
+        Due Date
+      </label>
+      <input
+        type="datetime-local"
+        id="dueDate"
+        [(ngModel)]="dueDate"
+        name="dueDate"
+        required
+        class="w-full mt-1 px-3 py-2 border rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+      />
+      <!-- Validation for Due Date -->
+      <p *ngIf="submitted && dateErrorMessage" class="text-red-500 text-sm">
+        {{ dateErrorMessage }}
+      </p>
+    </div>
+
+    <!-- Submit Button -->
+    <button
+      type="submit"
+      class="w-full bg-green-500 text-white py-2 hover:bg-green-600 rounded-full"
+    >
+      {{ taskToEdit ? 'Update Task' : 'Add Task' }}
+    </button>
+  </form>
+</div>
