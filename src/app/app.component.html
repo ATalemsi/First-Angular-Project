@@ -1,3 +1,14 @@
-<app-navbar (toggleAside)="toggleAside()"></app-navbar>
-<app-aside [isOpen]="isAsideOpen"></app-aside>
-<router-outlet></router-outlet>
+<div class="flex flex-col h-screen">
+  <app-navbar (toggleAside)="toggleAside()"></app-navbar>
+
+  <div class="flex flex-1">
+
+    <!-- Aside Menu -->
+    <app-aside [isOpen]="isAsideOpen" class="lg:w-64 fixed  lg:relative"></app-aside>
+
+    <!-- Main Content Area -->
+    <div class="flex-1 p-4 overflow-auto lg:ml-54 mt-16">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

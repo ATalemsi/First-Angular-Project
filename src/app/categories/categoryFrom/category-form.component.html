@@ -17,13 +17,21 @@
         required
         maxlength="50"
         class="w-full mt-1 px-3 py-2 border rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+        (input)="resetValidation()"
       />
+      <!-- Validation Messages -->
+      <p *ngIf="submitted && !categoryName.trim()" class="text-red-500 text-sm">
+        Category name cannot be empty!
+      </p>
+      <p *ngIf="submitted && categoryExists" class="text-red-500 text-sm">
+        Category already exists!
+      </p>
     </div>
 
     <!-- Submit Button -->
     <button
       type="submit"
-      class="w-full bg-green-500 text-white py-2 rounded hover:bg-green-600"
+      class="w-full bg-green-500 text-white py-2  hover:bg-green-600 rounded-full"
     >
       {{ categoryToEdit ? 'Update Category' : 'Add Category' }}
     </button>

@@ -14,7 +14,7 @@ export class AppComponent {
   isAsideOpen = false;
 
   toggleAside() {
+    console.log('AppComponent: Toggling aside state'); // Debug log
     this.isAsideOpen = !this.isAsideOpen;
   }
-
 }

@@ -12,19 +12,17 @@ import { Router } from '@angular/router';
   styleUrl: './aside.component.scss'
 })
 export class AsideComponent {
-  @Input() isOpen: boolean = true;
+  @Input() isOpen: boolean = false;
 
   constructor(private readonly router: Router) {}
 
   closeAside() {
-    this.isOpen = false;
+    this.isOpen = false; // Close the aside menu
   }
 
   navigateTo(route: string): void {
-    this.router.navigate([route]).then(() => {
-      this.closeAside();
-    }).catch(err => {
-      console.error('Navigation error:', err);
-    });
+    this.router.navigate([route])
+      .then(() => this.closeAside())
+      .catch((err) => console.error('Navigation error:', err));
   }
 }

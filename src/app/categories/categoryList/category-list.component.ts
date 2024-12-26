@@ -1,12 +1,13 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Category} from "../../models/categories.model";
-import {NgForOf} from "@angular/common";
+import {NgForOf, NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-category-list',
   standalone: true,
   imports: [
-    NgForOf
+    NgForOf,
+    NgIf
   ],
   templateUrl: './category-list.component.html',
   styleUrl: './category-list.component.scss'

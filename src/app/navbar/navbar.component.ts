@@ -11,6 +11,7 @@ export class NavbarComponent {
   @Output() toggleAside = new EventEmitter<void>();
 
   onToggleAside() {
+    console.log('Toggle aside button clicked');
     this.toggleAside.emit();
   }
 }
