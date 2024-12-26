@@ -47,5 +47,4 @@ export class DashboardComponent {
       { name: 'Low', value: lowPriority }
     ];
   }
-
 }
