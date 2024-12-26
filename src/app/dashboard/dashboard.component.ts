@@ -34,7 +34,7 @@ export class DashboardComponent {
   ngOnInit(): void {
 
     const tasks = JSON.parse(localStorage.getItem('tasks') || '[]');
-    this.tasks = tasks;
+    this.tasks = tasks ;
 
     const highPriority = tasks.filter((task: TasksModel) => task.priority === 'high').length;
     const mediumPriority = tasks.filter((task: TasksModel) => task.priority === 'medium').length;
