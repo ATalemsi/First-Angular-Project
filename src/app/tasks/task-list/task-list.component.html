@@ -1,7 +1,16 @@
-<ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+<div class="search-bar mb-6">
+  <input
+    type="text"
+    [(ngModel)]="searchText"
+    placeholder="Rechercher une tâche..."
+    class="w-full p-4 bg-gray-100 border border-gray-300 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-lg"
+  />
+</div>
+
+<ul class="flex flex-wrap gap-6">
   <li
-    *ngFor="let task of tasks"
-    class="flex flex-col justify-between items-start bg-gray-200 p-8 rounded-lg shadow-xl transition-transform hover:scale-105"
+    *ngFor="let task of tasks | taskSearch: searchText"
+    class="flex flex-col justify-between items-start bg-gray-200 p-12 rounded-lg shadow-xl transition-transform hover:scale-105 w-80"
   >
     <span class="text-2xl font-semibold text-gray-800">{{ task.title }}</span>
 
@@ -18,6 +27,12 @@
     <div class="mt-4">
       <h3 class="text-lg font-semibold">Priority:</h3>
       <p class="ml-4 mt-2 text-sm text-gray-700">{{ task.priority }}</p>
+    </div>
+
+    <!-- Display Category -->
+    <div class="mt-4">
+      <h3 class="text-lg font-semibold">Category:</h3>
+      <p class="ml-4 mt-2 text-sm text-gray-700">{{ task.category?.name || 'No Category' }}</p>
     </div>
 
     <div class="mt-6 flex gap-2 w-full">

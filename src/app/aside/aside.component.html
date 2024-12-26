@@ -18,18 +18,20 @@
       <h2 class="text-lg font-bold text-gray-800">Menu</h2>
     </div>
     <div class="p-4">
-      <button
-        (click)="navigateTo('tasks')"
+      <!-- Navigation to Tasks -->
+      <a
+        routerLink="/tasks"
         class="flex justify-between items-center w-full py-3 px-4 mb-4 bg-blue-500 text-gray-950 rounded-lg shadow hover:bg-blue-400 transition-colors hover:scale-105"
       >
         <span class="font-medium">Tasks</span>
-      </button>
-      <button
-        (click)="navigateTo('categories')"
+      </a>
+      <!-- Navigation to Categories -->
+      <a
+        routerLink="/categories"
         class="flex justify-between items-center w-full py-3 px-4 bg-blue-500 text-gray-950 rounded-lg shadow hover:bg-blue-400 transition-colors hover:scale-105"
       >
         <span class="font-medium">Categories</span>
-      </button>
+      </a>
     </div>
   </div>
 </aside>

@@ -1,12 +1,13 @@
 import {Component, Input} from '@angular/core';
 import {NgClass} from "@angular/common";
-import { Router } from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-aside',
   standalone: true,
   imports: [
-    NgClass
+    NgClass,
+    RouterLink
   ],
   templateUrl: './aside.component.html',
   styleUrl: './aside.component.scss'

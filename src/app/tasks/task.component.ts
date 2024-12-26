@@ -17,9 +17,9 @@ import {NgIf} from "@angular/common";
   styleUrl: './task.component.scss'
 })
 export class TaskComponent  {
-  tasks: TasksModel[] = []; // Array to store the tasks
-  showFormPopup = false; // Controls visibility of the task form popup
-  taskToEdit: TasksModel | null = null; // Holds the task being edited
+  tasks: TasksModel[] = [];
+  showFormPopup = false;
+  taskToEdit: TasksModel | null = null;
 
   constructor(private readonly taskService: TaskService) {
     this.fetchTasks()

@@ -1,18 +1,19 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {TasksModel} from "../../models/tasks.model";
-import {TaskService} from "../../services/task/task.service";
-import {NgIf} from "@angular/common";
-import {FormsModule} from "@angular/forms";
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { TasksModel } from "../../models/tasks.model";
+import { TaskService } from "../../services/task/task.service";
+import { NgForOf, NgIf } from "@angular/common";
+import { FormsModule } from "@angular/forms";
 
 @Component({
   selector: 'app-task-form',
   standalone: true,
   imports: [
     NgIf,
-    FormsModule
+    FormsModule,
+    NgForOf
   ],
   templateUrl: './task-form.component.html',
-  styleUrl: './task-form.component.scss'
+  styleUrls: ['./task-form.component.scss']
 })
 export class TaskFormComponent {
   @Input() taskToEdit: TasksModel | null = null;
@@ -30,28 +31,74 @@ export class TaskFormComponent {
   titleMaxLength = 100;
   descriptionMaxLength = 500;
   dateErrorMessage = '';
+  titleErrorMessage = '';
+  descriptionErrorMessage = '';
+  dueDateErrorMessage = '';
+  priorityErrorMessage = '';
+  statusErrorMessage = '';
 
-  constructor(private  readonly taskService: TaskService) {}
+  categories: { id: number; name: string }[] = []; // Holds categories from localStorage
+
+  constructor(private readonly taskService: TaskService) {}
+
+  ngOnInit(): void {
+    const storedCategories = localStorage.getItem('categories');
+    if (storedCategories) {
+      this.categories = JSON.parse(storedCategories);
+    }
+  }
 
   onSubmit(): void {
     this.submitted = true;
 
+    // Reset error messages
+    this.titleErrorMessage = '';
+    this.descriptionErrorMessage = '';
+    this.dueDateErrorMessage = '';
+    this.priorityErrorMessage = '';
+    this.statusErrorMessage = '';
 
-    if (this.title.trim().length > this.titleMaxLength) {
-      return;
+    // Validation
+    let isValid = true;
+
+    // Title validation
+    if (this.title.trim().length === 0) {
+      this.titleErrorMessage = 'Title is required';
+      isValid = false;
+    } else if (this.title.trim().length > this.titleMaxLength) {
+      this.titleErrorMessage = `Title cannot exceed ${this.titleMaxLength} characters`;
+      isValid = false;
     }
 
-
+    // Description validation
     if (this.description.trim().length > this.descriptionMaxLength) {
-      return;
+      this.descriptionErrorMessage = `Description cannot exceed ${this.descriptionMaxLength} characters`;
+      isValid = false;
     }
 
+    if (!this.dueDate.trim()) {
+      this.dueDateErrorMessage = 'Due date is required';
+      isValid = false;
+    }
 
-    if (new Date(this.dueDate) < new Date()) {
-      this.dateErrorMessage = 'La date d\'échéance ne peut pas être dans le passé!';
+    // Due date validation: Check if the due date is in the past
+    if (this.dueDate && new Date(this.dueDate) < new Date()) {
+      this.dueDateErrorMessage = "Due date can't be in the past!";
+      isValid = false;
+    }
+    if (!this.priority) {
+      this.priorityErrorMessage = 'Priority is required';
+      isValid = false;
+    }
+
+    // Status validation
+    if (!this.status) {
+      this.statusErrorMessage = 'Status is required';
+      isValid = false;
+    }
+    // If any validation failed, stop the form submission
+    if (!isValid) {
       return;
-    } else {
-      this.dateErrorMessage = '';
     }
 
     if (this.taskToEdit) {
