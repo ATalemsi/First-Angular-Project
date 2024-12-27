@@ -1,9 +1,9 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {TasksModel} from "../../models/tasks.model";
-import {TaskService} from "../../services/task/task.service";
-import {DatePipe, NgForOf} from "@angular/common";
-import {FormsModule} from "@angular/forms";
-import {TaskSearchPipe} from "../../shared/task-filter.pipe";
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { TasksModel } from "../../models/tasks.model";
+import { TaskService } from "../../services/task/task.service";
+import { TaskSearchPipe } from "../../shared/task-filter.pipe";
+import { DatePipe, NgForOf } from "@angular/common";
+import { FormsModule } from "@angular/forms";
 
 @Component({
   selector: 'app-task-list',
@@ -15,7 +15,7 @@ import {TaskSearchPipe} from "../../shared/task-filter.pipe";
     TaskSearchPipe
   ],
   templateUrl: './task-list.component.html',
-  styleUrl: './task-list.component.scss'
+  styleUrls: ['./task-list.component.scss']
 })
 export class TaskListComponent implements OnInit {
   @Input() tasks: TasksModel[] = [];
@@ -23,18 +23,18 @@ export class TaskListComponent implements OnInit {
   @Output() deleteTaskEvent = new EventEmitter<TasksModel>();
 
   searchText: string = '';
+
   constructor(private readonly taskService: TaskService) {}
 
   ngOnInit() {
-    this.tasks = this.taskService.getTasks(); // Get tasks with categories
+    this.tasks = this.taskService.getTasks();
   }
+
   editTask(task: TasksModel) {
     this.editTaskEvent.emit(task);
   }
 
   deleteTask(task: TasksModel) {
     this.deleteTaskEvent.emit(task);
-    this.taskService.deleteTask(task);
   }
-
 }

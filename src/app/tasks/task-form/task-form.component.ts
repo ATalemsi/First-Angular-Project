@@ -37,14 +37,31 @@ export class TaskFormComponent {
   priorityErrorMessage = '';
   statusErrorMessage = '';
 
-  categories: { id: number; name: string }[] = []; // Holds categories from localStorage
+  categories: { id: number; name: string }[] = []; 
 
   constructor(private readonly taskService: TaskService) {}
 
   ngOnInit(): void {
+
     const storedCategories = localStorage.getItem('categories');
     if (storedCategories) {
       this.categories = JSON.parse(storedCategories);
+    } else {
+      this.categories = [
+        { id: 1, name: 'Work' },
+        { id: 2, name: 'Personal' },
+        { id: 3, name: 'Study' }
+      ];
+    }
+
+
+    if (this.taskToEdit) {
+      this.title = this.taskToEdit.title || '';
+      this.description = this.taskToEdit.description || '';
+      this.dueDate = this.taskToEdit.dueDate || '';
+      this.priority = this.taskToEdit.priority || 'medium';
+      this.status = this.taskToEdit.status || 'not-started';
+      this.categoryId = this.taskToEdit.categoryId || 0;
     }
   }
 
@@ -96,17 +113,20 @@ export class TaskFormComponent {
       this.statusErrorMessage = 'Status is required';
       isValid = false;
     }
+
     // If any validation failed, stop the form submission
     if (!isValid) {
       return;
     }
 
+    // If editing an existing task, update it
     if (this.taskToEdit) {
       this.updateTask();
     } else {
       this.addTask();
     }
 
+    // Reset the form and emit the formSubmitted event
     this.resetForm();
     this.formSubmitted.emit();
   }

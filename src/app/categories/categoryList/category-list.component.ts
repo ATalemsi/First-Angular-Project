@@ -22,6 +22,6 @@ export class CategoryListComponent {
   }
 
   deleteCategory(category: Category) {
-    this.deleteCategoryEvent.emit(category);  // Emit the category to delete
+    this.deleteCategoryEvent.emit(category);  
   }
 }

@@ -33,26 +33,25 @@ export class TaskComponent  {
 
   addTask() {
     this.showFormPopup = true;
-    this.taskToEdit = null; // Reset task for adding new one
+    this.taskToEdit = null;
   }
 
-  // Opens the task form for editing an existing task
+
   editTask(task: TasksModel) {
     this.showFormPopup = true;
-    this.taskToEdit = task; // Set the task to edit
+    this.taskToEdit = task;
   }
 
-  // Deletes a task
   deleteTask(task: TasksModel) {
     if (confirm(`Are you sure you want to delete the category "${task.title}"?`)) {
       this.taskService.deleteTask(task)
       this.fetchTasks();
     }
   }
-  // After the form is submitted, refresh or update the tasks
+
   handleFormSubmitted() {
-    this.showFormPopup = false; // Close the form
-    this.fetchTasks(); // Refresh the task list
+    this.showFormPopup = false;
+    this.fetchTasks();
   }
 
 }
