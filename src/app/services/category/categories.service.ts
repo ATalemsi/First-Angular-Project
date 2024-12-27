@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Category} from "../../models/categories.model";
+import {TaskService} from "../task/task.service";
 
 @Injectable({
   providedIn: 'root'
@@ -7,11 +8,16 @@ import {Category} from "../../models/categories.model";
 export class CategoriesService {
   private readonly storageKey ='categories';
 
-  constructor() {}
+  constructor(private readonly taskService: TaskService) {}
 
   getCategories(): Category[] {
     const categories = localStorage.getItem(this.storageKey);
-    return categories ? JSON.parse(categories) : [];
+    const parsedCategories: Category[] = categories ? JSON.parse(categories) : [];
+
+    return parsedCategories.map(category => ({
+      ...category,
+      tasks: this.taskService.getTasksForCategory(category.id) // Get tasks for each category
+    }));
   }
 
   addCategory(category: Category) {

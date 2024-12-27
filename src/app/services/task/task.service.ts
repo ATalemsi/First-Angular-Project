@@ -22,14 +22,26 @@ export class TaskService {
 
   getCategoryForTask(categoryId: number): Category {
     const categories: Category[] = JSON.parse(localStorage.getItem('categories') || '[]');
-    const category = categories.find((category: Category) => category.id === categoryId);
+    const category = categories.find(
+      (category: Category) => Number(category.id) === Number(categoryId)
+    );
+    console.log(category);
     return category || { id: 0, name: 'No Category', tasks: [] };
+  }
+
+  getTasksForCategory(categoryId: number): TasksModel[] {
+    const tasks: TasksModel[] = this.getTasks();
+    return tasks.filter(task => Number(task.categoryId) === Number(categoryId)); // Filter tasks by categoryId
   }
 
 
 
   addTask(task: TasksModel) {
     const tasks = this.getTasks();
+    const categories: Category[] = JSON.parse(localStorage.getItem('categories') || '[]');
+    task.category =  categories.find(
+      (category: Category) => Number(category.id) === Number(task.categoryId)
+    );
     tasks.push(task);
     this.saveToLocalStorage(tasks);
   }

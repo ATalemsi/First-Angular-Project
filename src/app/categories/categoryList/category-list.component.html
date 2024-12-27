@@ -5,13 +5,16 @@
   >
     <span class="text-2xl font-semibold text-gray-800">{{ category.name }}</span>
 
-    <!-- Display "0 tasks" if no tasks in category -->
+    <!-- Display the number of tasks in the category -->
     <div class="mt-4">
       <h3 class="text-lg font-semibold">Tasks:</h3>
       <ul class="ml-4 mt-2">
-        <li *ngIf="category.tasks?.length === 0" class="text-sm text-gray-500 ">0 tasks</li>
-        <li *ngFor="let task of category.tasks" class="text-sm text-gray-700">
-          {{ task.title}}
+        <!-- If there are no tasks, show "0 tasks" -->
+        <li *ngIf="category.tasks.length === 0" class="text-sm text-gray-500">0 tasks</li>
+
+        <!-- If there are tasks, display the count -->
+        <li *ngIf="category.tasks.length > 0" class="text-sm text-gray-500">
+          {{ category.tasks.length }} task{{ category.tasks.length > 1 ? 's' : '' }}
         </li>
       </ul>
     </div>

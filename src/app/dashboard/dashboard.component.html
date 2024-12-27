@@ -1,0 +1,29 @@
+<div class="dashboard-container" *ngIf="hasData(); else noDataTemplate">
+  <!-- Bar Chart -->
+  <div class="chart-wrapper">
+    <h3>Bar Chart</h3>
+    <canvas
+      baseChart
+      [data]="barChartData"
+      [options]="barChartOptions"
+      [type]="barChartType">
+    </canvas>
+  </div>
+
+  <!-- Pie Chart -->
+  <div class="chart-wrapper">
+    <h3>Pie Chart</h3>
+    <canvas
+      baseChart
+      [data]="pieChartData"
+      [type]="pieChartType">
+    </canvas>
+  </div>
+</div>
+
+<!-- Template for no data -->
+<ng-template #noDataTemplate>
+  <div class="no-data-message">
+    No data available to display.
+  </div>
+</ng-template>
