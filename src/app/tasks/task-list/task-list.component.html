@@ -7,12 +7,30 @@
   />
 </div>
 
-<ul class="flex flex-wrap gap-6">
+<ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 justify-center">
   <li
     *ngFor="let task of tasks | taskSearch: searchText"
-    class="flex flex-col justify-between items-start bg-gray-200 p-12 rounded-lg shadow-xl transition-transform hover:scale-105 w-80"
+    [ngClass]="{
+      'bg-red-100': task.priority === 'high',
+      'bg-yellow-100': task.priority === 'medium',
+      'bg-green-100': task.priority === 'low'
+    }"
+    class="flex flex-col justify-between items-start p-8 rounded-lg shadow-xl transition-transform hover:scale-105 mb-6"
   >
-    <span class="text-2xl font-semibold text-gray-800">{{ task.title }}</span>
+    <div class="flex justify-between w-full">
+      <span class="text-2xl font-semibold text-gray-800">{{ task.title }}</span>
+      <!-- Status Badge -->
+      <span
+        [ngClass]="{
+          'bg-green-500': task.status === 'completed',
+          'bg-yellow-500': task.status === 'in-progress',
+          'bg-red-500': task.status === 'not-started'
+        }"
+        class="px-3 py-1 rounded-full text-white text-sm"
+      >
+        {{ task.status }}
+      </span>
+    </div>
 
     <div class="mt-4">
       <h3 class="text-lg font-semibold">Description:</h3>

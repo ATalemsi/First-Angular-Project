@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TasksModel } from "../../models/tasks.model";
 import { TaskService } from "../../services/task/task.service";
 import { TaskSearchPipe } from "../../shared/task-filter.pipe";
-import { DatePipe, NgForOf } from "@angular/common";
+import {DatePipe, NgClass, NgForOf} from "@angular/common";
 import { FormsModule } from "@angular/forms";
 
 @Component({
@@ -12,7 +12,8 @@ import { FormsModule } from "@angular/forms";
     NgForOf,
     DatePipe,
     FormsModule,
-    TaskSearchPipe
+    TaskSearchPipe,
+    NgClass
   ],
   templateUrl: './task-list.component.html',
   styleUrls: ['./task-list.component.scss']

@@ -2,13 +2,13 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ChartConfiguration, ChartData } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import { TaskService } from '../services/task/task.service';
-import { NgIf } from "@angular/common";
+import {DecimalPipe, NgIf} from "@angular/common";
 import { TasksModel } from '../models/tasks.model';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [BaseChartDirective, NgIf],
+  imports: [BaseChartDirective, NgIf, DecimalPipe],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
@@ -65,6 +65,9 @@ export class DashboardComponent implements OnInit {
     completed: 0,
     inProgress: 0,
     not_started: 0,
+    completedPercentage: 0,
+    notCompletedPercentage: 0,
+    overdueCount: 0,
   };
 
   constructor(private readonly taskService: TaskService) {}
@@ -138,10 +141,20 @@ export class DashboardComponent implements OnInit {
   }
 
   prepareTaskStats(tasks: TasksModel[]): void {
+    const now = new Date();
     this.taskStats.total = tasks.length;
     this.taskStats.completed = tasks.filter((t) => t.status === 'completed').length;
     this.taskStats.inProgress = tasks.filter((t) => t.status === 'in-progress').length;
     this.taskStats.not_started = tasks.filter((t) => t.status === 'not-started').length;
+
+    // Calculate overdue tasks
+    this.taskStats.overdueCount = tasks.filter((task) => new Date(task.dueDate).getTime() < now.getTime() && task.status !== 'completed').length;
+
+    // Calculate percentages
+    if (this.taskStats.total > 0) {
+      this.taskStats.completedPercentage = (this.taskStats.completed / this.taskStats.total) * 100;
+      this.taskStats.notCompletedPercentage = 100 - this.taskStats.completedPercentage;
+    }
   }
 
   hasData(): boolean {
